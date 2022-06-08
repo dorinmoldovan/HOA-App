@@ -1,4 +1,4 @@
-package de.hoa_app.model;
+package com.hoa_app.model;
 
 public class LeaderStallion {
 }
