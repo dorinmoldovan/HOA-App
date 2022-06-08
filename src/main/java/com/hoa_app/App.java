@@ -1,4 +1,4 @@
-package de.hoa_app;
+package com.hoa_app;
 
 import javax.swing.*;
 import java.awt.*;
