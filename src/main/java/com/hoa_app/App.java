@@ -84,8 +84,7 @@ public class App {
         JLabel ofLabel = new JLabel("Objective function (OF):");
         pane.add(ofLabel);
 
-        String[] ofs = {"", "OF 1", "OF 2", "OF 3", "OF 4",
-                "OF 5", "OF 6", "OF 7", "OF 8", "OF 9"};
+        String[] ofs = {"", "OF 1", "OF 2", "OF 3", "OF 4", "OF 5", "OF 6", "OF 7", "OF 8", "OF 9"};
         JComboBox ofsComboBox = new JComboBox(ofs);
         pane.add(ofsComboBox);
 
