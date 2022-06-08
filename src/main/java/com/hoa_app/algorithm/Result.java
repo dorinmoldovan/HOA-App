@@ -6,7 +6,7 @@ public class Result {
 
     private String logs;
     private Horse globalBest;
-    private double runningTime;
+    private Double runningTime;
 
     public Result() {
         this.logs = "";
@@ -34,11 +34,11 @@ public class Result {
         this.globalBest = globalBest;
     }
 
-    public double getRunningTime() {
+    public Double getRunningTime() {
         return runningTime;
     }
 
-    public void setRunningTime(double runningTime) {
+    public void setRunningTime(Double runningTime) {
         this.runningTime = runningTime;
     }
 }
