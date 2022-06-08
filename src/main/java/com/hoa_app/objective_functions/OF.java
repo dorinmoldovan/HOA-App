@@ -3,8 +3,8 @@ package com.hoa_app.objective_functions;
 import java.util.List;
 
 public abstract class OF {
-    private double minValue;
-    private double maxValue;
+    private Double minValue;
+    private Double maxValue;
 
     public OF(double minValue, double maxValue) {
         this.minValue = minValue;
@@ -13,19 +13,19 @@ public abstract class OF {
 
     public abstract double compute(List<Double> values);
 
-    public double getMinValue() {
+    public Double getMinValue() {
         return minValue;
     }
 
-    public void setMinValue(double minValue) {
+    public void setMinValue(Double minValue) {
         this.minValue = minValue;
     }
 
-    public double getMaxValue() {
+    public Double getMaxValue() {
         return maxValue;
     }
 
-    public void setMaxValue(double maxValue) {
+    public void setMaxValue(Double maxValue) {
         this.maxValue = maxValue;
     }
 }

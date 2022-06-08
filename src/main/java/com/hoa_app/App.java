@@ -216,6 +216,14 @@ public class App {
                 HOA hoa = new HOA(N, I, D, DSP, SSP, HDR, HMP, M, OFCreator.generateOF(OF));
                 Result result = hoa.run();
                 textArea.append(result.getLogs());
+                textArea.append("  ------------------------------------------------------------\n");
+                textArea.append("  GBEST HORSE VALUE\n");
+                textArea.append("  ------------------------------------------------------------\n");
+                textArea.append("  " + result.getGlobalBest().getFitness() + "\n");
+                textArea.append("  ------------------------------------------------------------\n");
+                textArea.append("  RUNNING TIME\n");
+                textArea.append("  ------------------------------------------------------------\n");
+                textArea.append("  " + result.getRunningTime() + " millis\n");
             }
         });
 
