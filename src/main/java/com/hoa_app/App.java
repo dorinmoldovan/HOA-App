@@ -2,6 +2,8 @@ package com.hoa_app;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -28,67 +30,67 @@ public class App {
         JLabel horsesLabel = new JLabel("Number of horses (N):");
         pane.add(horsesLabel);
 
-        JTextField horsesField = new JTextField(10);
+        final JTextField horsesField = new JTextField(10);
         horsesField.addKeyListener(addKeyAdapterForDigits());
         pane.add(horsesField);
 
         JLabel numberOfIterationsLabel = new JLabel("Number of iterations (I):");
         pane.add(numberOfIterationsLabel);
 
-        JTextField iterationsField = new JTextField(10);
+        final JTextField iterationsField = new JTextField(10);
         iterationsField.addKeyListener(addKeyAdapterForDigits());
         pane.add(iterationsField);
 
         JLabel numberOfDimensionsLabel = new JLabel("Number of dimensions (D):");
         pane.add(numberOfDimensionsLabel);
 
-        JTextField numberOfDimensionsField = new JTextField(10);
+        final JTextField numberOfDimensionsField = new JTextField(10);
         numberOfDimensionsField.addKeyListener(addKeyAdapterForDigits());
         pane.add(numberOfDimensionsField);
 
         JLabel dspLabel = new JLabel("Dominant stallions percent (DSP):");
         pane.add(dspLabel);
 
-        JTextField dspField = new JTextField(10);
+        final JTextField dspField = new JTextField(10);
         dspField.addKeyListener(addKeyAdapterForDigits());
         pane.add(dspField);
 
         JLabel sspLabel = new JLabel("Single stallions percent (SSP):");
         pane.add(sspLabel);
 
-        JTextField sspField = new JTextField(10);
+        final JTextField sspField = new JTextField(10);
         sspField.addKeyListener(addKeyAdapterForDigits());
         pane.add(sspField);
 
         JLabel hdrLabel = new JLabel("Horse distribution rate (HDR):");
         pane.add(hdrLabel);
 
-        JTextField hdrField = new JTextField(10);
+        final JTextField hdrField = new JTextField(10);
         hdrField.addKeyListener(addKeyAdapterForDigits());
         pane.add(hdrField);
 
         JLabel hmpLabel = new JLabel("Horse memory pool (HMP):");
         pane.add(hmpLabel);
 
-        JTextField hmpField = new JTextField(10);
+        final JTextField hmpField = new JTextField(10);
         hmpField.addKeyListener(addKeyAdapterForDigits());
         pane.add(hmpField);
 
         JLabel reorganizationFrequencyLabel = new JLabel("Reorganization frequency (M):");
         pane.add(reorganizationFrequencyLabel);
 
-        JTextField reorganizationFrequencyField = new JTextField(10);
+        final JTextField reorganizationFrequencyField = new JTextField(10);
         reorganizationFrequencyField.addKeyListener(addKeyAdapterForDigits());
         pane.add(reorganizationFrequencyField);
 
-        JLabel ofLabel = new JLabel("Objective function (OF):");
+        final JLabel ofLabel = new JLabel("Objective function (OF):");
         pane.add(ofLabel);
 
         String[] ofs = {"", "OF 1", "OF 2", "OF 3", "OF 4", "OF 5", "OF 6", "OF 7", "OF 8", "OF 9"};
-        JComboBox ofsComboBox = new JComboBox(ofs);
+        final JComboBox ofsComboBox = new JComboBox(ofs);
         pane.add(ofsComboBox);
 
-        JTextArea textArea = new JTextArea(22, 48);
+        final JTextArea textArea = new JTextArea(22, 48);
         JScrollPane scrollPane = new JScrollPane(textArea);
         textArea.setEditable(false);
         pane.add(scrollPane);
@@ -173,6 +175,37 @@ public class App {
 
         JButton simulationButton = new JButton("Start Simulation");
         pane.add(simulationButton);
+        simulationButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int N = Integer.parseInt(horsesField.getText());
+                int I = Integer.parseInt(iterationsField.getText());
+                int D = Integer.parseInt(numberOfDimensionsField.getText());
+                int DSP = Integer.parseInt(dspField.getText());
+                int SSP = Integer.parseInt(sspField.getText());
+                int HDR = Integer.parseInt(hdrField.getText());
+                int HMP = Integer.parseInt(hmpField.getText());
+                int M = Integer.parseInt(reorganizationFrequencyField.getText());
+                String OF = (String) ofsComboBox.getSelectedItem();
+
+                textArea.setText(null);
+
+                textArea.append("  ------------------------------------------------------------\n");
+                textArea.append("  NEW SIMULATION\n");
+                textArea.append("  ------------------------------------------------------------\n");
+
+                textArea.append("  Number of horses (N) = " + N + "\n");
+                textArea.append("  Number of iterations (I) = " + I + "\n");
+                textArea.append("  Number of dimensions (D) = " + D + "\n");
+                textArea.append("  Dominant stallions percent (DSP) = " + DSP + "\n");
+                textArea.append("  Single stallions percent (SSP) = " + SSP + "\n");
+                textArea.append("  Horse distribution rate (HDR) = " + HDR + "\n");
+                textArea.append("  Horse memory pool (HMP) = " + HMP + "\n");
+                textArea.append("  Reorganization frequency (M) = " + M + "\n");
+                textArea.append("  Objective function (OF) = " + OF + "\n");
+            }
+        });
 
         size = simulationButton.getPreferredSize();
         simulationButton.setBounds(25 + insets.left, 400 + insets.top,
