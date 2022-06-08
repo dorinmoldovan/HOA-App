@@ -4,7 +4,7 @@ import java.util.List;
 
 public class OF6 extends OF {
 
-    public OF6(double minValue, double maxValue) {
+    public OF6() {
         super(-10.0, 10.0);
     }
 

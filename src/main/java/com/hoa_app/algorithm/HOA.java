@@ -26,6 +26,16 @@ public class HOA {
         this.of = of;
     }
 
+    public Result run() {
+        Result result = new Result();
+
+        for(int i = 0; i < I; i++) {
+            result.setLogs(result.getLogs() + "  Iteration " + (i + 1) + "\n");
+        }
+
+        return result;
+    }
+
     public int getN() {
         return N;
     }
