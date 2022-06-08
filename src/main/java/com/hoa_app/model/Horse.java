@@ -9,14 +9,17 @@ public class Horse implements Serializable {
     private List<Double> velocity;
     private Map<Integer, List<Double>> memory;
     private Double fitness;
+    private Random rand;
     private Integer D;
     private Integer M;
     private Double pMin;
     private Double pMax;
     private Double vMin;
     private Double vMax;
+    private Double rank;
 
-    public Horse(Integer d, Integer m, Double pMin, Double pMax, Double vMin, Double vMax) {
+    public Horse(Random rand, Integer d, Integer m, Double pMin, Double pMax, Double vMin, Double vMax) {
+        this.rand = rand;
         this.D = d;
         this.M = m;
         this.pMin = pMin;
@@ -24,7 +27,6 @@ public class Horse implements Serializable {
         this.vMin = vMin;
         this.vMax = vMax;
         this.position = new ArrayList<>();
-        Random rand = new Random(System.currentTimeMillis());
         for(int i = 0; i < this.D; i++) {
             double value = (pMax - pMin) * rand.nextDouble() + pMin;
             this.position.add(value);
@@ -37,6 +39,14 @@ public class Horse implements Serializable {
         for(int i = 0; i < m; i++) {
             this.memory.put(i, new ArrayList<Double>());
         }
+    }
+
+    public Random getRand() {
+        return rand;
+    }
+
+    public void setRand(Random rand) {
+        this.rand = rand;
     }
 
     public List<Double> getPosition() {
@@ -119,4 +129,11 @@ public class Horse implements Serializable {
         this.pMax = pMax;
     }
 
+    public Double getRank() {
+        return rank;
+    }
+
+    public void setRank(Double rank) {
+        this.rank = rank;
+    }
 }
