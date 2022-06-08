@@ -1,5 +1,9 @@
 package com.hoa_app;
 
+import com.hoa_app.algorithm.HOA;
+import com.hoa_app.algorithm.Result;
+import com.hoa_app.objective_functions.OFCreator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -204,6 +208,14 @@ public class App {
                 textArea.append("  Horse memory pool (HMP) = " + HMP + "\n");
                 textArea.append("  Reorganization frequency (M) = " + M + "\n");
                 textArea.append("  Objective function (OF) = " + OF + "\n");
+
+                textArea.append("  ------------------------------------------------------------\n");
+                textArea.append("  SIMULATION LOGS\n");
+                textArea.append("  ------------------------------------------------------------\n");
+
+                HOA hoa = new HOA(N, I, D, DSP, SSP, HDR, HMP, M, OFCreator.generateOF(OF));
+                Result result = hoa.run();
+                textArea.append(result.getLogs());
             }
         });
 
