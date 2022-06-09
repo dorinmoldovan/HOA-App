@@ -9,7 +9,7 @@ A Java implementation of the HOA.
 
 ## Objective Functions for HOA-App Evaluation
 
-$$OF_1 = \sum_{i=1}^{N}x_i^2, [-100, 100]$$
+$OF_1 = \sum_{i=1}^{N}x_i^2, [-100, 100]$
 
 $$OF_2 = \sum_{i = 1}^{N} i \times x_i^4 + random[0, 1), [-1.28, 1.28]$$
 
