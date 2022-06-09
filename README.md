@@ -7,7 +7,7 @@ A Java implementation of the HOA.
 1. Clone the current repository locally.
 2. Run the App.java class.
 
-## HOA-App Use Case
+## HOA-App Simulation
 
 ![HOA-App Snapshot](hoa_app_snapshot.PNG?raw=true "Title")
 
