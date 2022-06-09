@@ -13,8 +13,6 @@ A Java implementation of the HOA.
 
 ## HOA-App Use Case
 
-HOA-App for OF1.
-
 ![HOA-App Snapshot](hoa_app_snapshot.PNG?raw=true "Title")
 
 ## Author
