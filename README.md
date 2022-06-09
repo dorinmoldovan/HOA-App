@@ -9,7 +9,7 @@ A Java implementation of the HOA.
 
 ## Objective Functions
 
-1. OF1: $\sum_{i=1}^{N}x_i^2$
+OF1: $$\sum_{i=1}^{N}x_i^2$$
 
 ## HOA-App Use Case
 
