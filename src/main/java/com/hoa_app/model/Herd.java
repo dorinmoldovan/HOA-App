@@ -5,21 +5,12 @@ import java.util.List;
 
 public class Herd {
 
-    private Horse leader;
     private List<Horse> horses;
     private List<Double> center;
 
-    public Herd(Horse leader, List<Horse> horses) {
-        this.leader = leader;
-        this.horses = horses;
-    }
-
-    public Horse getLeader() {
-        return leader;
-    }
-
-    public void setLeader(Horse leader) {
-        this.leader = leader;
+    public Herd(Horse horse) {
+        this.horses = new ArrayList<Horse>();
+        this.horses.add(horse);
     }
 
     public List<Horse> getHorses() {
@@ -76,5 +67,16 @@ public class Herd {
             }
             center.set(j, value);
         }
+    }
+
+    public Double computeDistanceToHerd(List<Double> position) {
+        double distance = 0.0;
+
+        for(int i = 0; i < position.size(); i++) {
+            distance = distance + Math.pow(position.get(i) - this.center.get(i), 2);
+        }
+        distance = Math.sqrt(2);
+
+        return distance;
     }
 }
