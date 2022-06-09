@@ -29,6 +29,8 @@ public class App {
     }
 
     public static void addComponentsToPane(Container pane) {
+        pane.setBackground(new java.awt.Color(176, 196, 222));
+
         pane.setLayout(null);
 
         JLabel horsesLabel = new JLabel("Number of horses (N):");
