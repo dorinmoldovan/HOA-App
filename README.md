@@ -7,25 +7,9 @@ A Java implementation of the HOA.
 1. Clone the current repository locally.
 2. Run the App.java class.
 
-## Objective Functions for HOA-App Evaluation
+## HOA-App UML Diagram
 
-$$OF_1 = \sum_{i=1}^{N}x_i^2, [-100, 100]$$
 
-$$OF_2 = \sum_{i = 1}^{N} i \times x_i^4 + random[0, 1), [-1.28, 1.28]$$
-
-$$OF_3 = max(\left| x_i\right|, 1 \le i \le N), [-100, 100]$$
-
-$$OF_4 = \sum_{i = 1}^{N - 1} \left[ 100 \times \left(x_{i + 1} - x_i^2 \right)^2 + \left( x_i - 1 \right)^2 \right], [-30, 30]$$
-
-$$OF_5 = \sum_{i = 1}^{N} \left[ x_i^2 - 10 \times cos (2 \pi x_i) + 10 \right], [-5.12, 5.12]$$
-
-$$OF_6 = \sum_{i = 1}^{N} \left| x_i \right| + \prod_{i = 1}^{N} \left| x_i \right|, [-10, 10]$$
-
-$$OF_7 = \frac{1}{4000} \times \sum_{i = 1}^{N} x_i^2 - \prod_{i = 1}^{N} cos \left( \frac{x_i}{\sqrt{i}} \right) + 1, [-600, 600]$$
-
-$$OF_8 = \sum_{i=1}^{N} \left( \sum_{j = 1}^{i} x_j \right)^2, [-100, 100]$$
-
-$$OF_9 = \frac{1}{2000} \times \sum_{i = 1}^{N} x_i^2 - \prod_{i = 1}^{N} cos^{4} \left( \frac{x_i^2}{i} \right) + 1, [-300, 300]$$
 
 ## HOA-App Use Case
 
