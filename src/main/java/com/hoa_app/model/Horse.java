@@ -11,17 +11,17 @@ public class Horse implements Serializable {
     private Double fitness;
     private Random rand;
     private Integer D;
-    private Integer M;
+    private Integer HMP;
     private Double pMin;
     private Double pMax;
     private Double vMin;
     private Double vMax;
     private Double rank;
 
-    public Horse(Random rand, Integer d, Integer m, Double pMin, Double pMax, Double vMin, Double vMax) {
+    public Horse(Random rand, Integer d, Integer HMP, Double pMin, Double pMax, Double vMin, Double vMax) {
         this.rand = rand;
         this.D = d;
-        this.M = m;
+        this.HMP = HMP;
         this.pMin = pMin;
         this.pMax = pMax;
         this.vMin = vMin;
@@ -35,9 +35,50 @@ public class Horse implements Serializable {
         for(int i = 0; i < this.D; i++) {
             this.velocity.add(0.0);
         }
+    }
+
+    public void computeVelocity(List<Double> center, Double r) {
+        double gait = 1 + rand.nextDouble();
+        for(int i = 0; i < this.D; i++) {
+            double newVelocity = this.velocity.get(i) + r * gait * (center.get(i) - this.position.get(i));
+            if(newVelocity < vMin) {
+                newVelocity = vMin;
+            }
+            if(newVelocity > vMax) {
+                newVelocity = vMax;
+            }
+            this.velocity.set(i, newVelocity);
+        }
+    }
+
+    public void computePosition() {
+        for(int i = 0; i < this.D; i++) {
+            double newPosition = this.position.get(i) + this.velocity.get(i);
+            if(newPosition < pMin) {
+                newPosition = pMin;
+            }
+            if(newPosition > pMax) {
+                newPosition = pMax;
+            }
+            this.position.set(i, newPosition);
+        }
+    }
+
+    public void computeMemory() {
         this.memory = new HashMap<>();
-        for(int i = 0; i < m; i++) {
-            this.memory.put(i, new ArrayList<Double>());
+        for(int i = 0; i < HMP; i++) {
+            List<Double> memoryValue = new ArrayList<Double>();
+            for(int j = 0; j < D; j++) {
+                double memVal = this.position.get(j) * rand.nextGaussian();
+                if(memVal < pMin) {
+                    memVal = pMin;
+                }
+                if(memVal > pMax) {
+                    memVal = pMax;
+                }
+                memoryValue.add(memVal);
+            }
+            memory.put(i, memoryValue);
         }
     }
 
@@ -89,12 +130,12 @@ public class Horse implements Serializable {
         D = d;
     }
 
-    public Integer getM() {
-        return M;
+    public Integer getHMP() {
+        return HMP;
     }
 
-    public void setM(Integer m) {
-        M = m;
+    public void setHMP(Integer HMP) {
+        this.HMP = HMP;
     }
 
     public Double getvMin() {

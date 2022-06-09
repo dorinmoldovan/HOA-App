@@ -36,8 +36,8 @@ public class HOA {
         this.HMP = HMP;
         this.M = m;
         this.of = of;
-        this.vMin = -0.1;
-        this.vMax = 0.1;
+        this.vMin = -0.01;
+        this.vMax = 0.01;
         this.sd = 1.0;
         this.rand = new Random(System.currentTimeMillis());
     }
@@ -45,7 +45,7 @@ public class HOA {
     public List<Horse> generatePopulation() {
         List<Horse> population = new ArrayList<Horse>();
         for(int i = 0; i < this.N; i++) {
-            Horse horse = new Horse(rand, this.D, this.M, of.getMinValue(), of.getMaxValue(), this.vMin, this.vMax);
+            Horse horse = new Horse(rand, this.D, this.HMP, of.getMinValue(), of.getMaxValue(), this.vMin, this.vMax);
             population.add(horse);
         }
         return population;
@@ -76,14 +76,10 @@ public class HOA {
 
         List<Herd> herds = new ArrayList<>();
         List<Horse> singleStallions = new ArrayList<>();
-        List<Horse> distributedHorses = new ArrayList<>();
 
         for(int i = 0; i < I; i++) {
             if((i % M) == 0) {
 
-                // for(int j = 0; j < population.size(); j++) {
-                //     System.out.println(population.get(j).getFitness());
-                // }
                 population.sort(new Comparator<Horse>() {
                     @Override
                     public int compare(Horse o1, Horse o2) {
@@ -91,18 +87,14 @@ public class HOA {
                     }
                 });
 
-                // System.out.println("sorted");
-                // for(int j = 0; j < population.size(); j++) {
-                //     System.out.println(population.get(j).getFitness());
-                // }
                 herds = new ArrayList<>();
                 singleStallions = new ArrayList<>();
-                distributedHorses = new ArrayList<>();
+                List<Horse> distributedHorses = new ArrayList<>();
 
                 for(int j = 0; j < population.size(); j++) {
                     if(j < noDominantStallions) {
                         Horse leaderStallion = population.get(j);
-                        Herd herd = new Herd(leaderStallion, new ArrayList<>());
+                        Herd herd = new Herd(leaderStallion);
                         herds.add(herd);
                     } else if(j < (noDominantStallions + noSingleStallions)) {
                         Horse singleStallion = population.get(j);
@@ -116,9 +108,6 @@ public class HOA {
                     }
                 }
 
-                // for(int j = 0; j < herds.size(); j++) {
-                //     System.out.println(j + " -> " + herds.get(j).getHorses().size());
-                // }
                 for(int j = 0; j < distributedHorses.size(); j++) {
                     List<Double> position = new ArrayList<Double>();
                     for(int k = 0; k < this.D; k++) {
@@ -146,17 +135,88 @@ public class HOA {
                 herds.get(j).computeHerdCenter();
             }
 
-            /*
             for(int j = 0; j < herds.size(); j++) {
-                System.out.println("Herd [" + j + "]");
                 for(int k = 0; k < herds.get(j).getHorses().size(); k++) {
-                    System.out.println("The rank of horse " + k + " is " + herds.get(j).getHorses().get(k).getRank() +
-                            " and the fitness is " + herds.get(j).getHorses().get(k).getFitness());
-                    System.out.println(herds.get(j).getHorses().get(k).getPosition());
+                    Horse currentHorse = herds.get(j).getHorses().get(k);
+                    currentHorse.computeVelocity(herds.get(j).getCenter(), currentHorse.getRank());
                 }
-                System.out.println("Center of Herd [" + j + "]" + herds.get(j).getCenter());
             }
-            */
+
+            for(int j = 0; j < singleStallions.size(); j++) {
+                Horse currentHorse = singleStallions.get(j);
+                int nearestHerdIndex = 0;
+                double distanceToNearestHerd = herds.get(0).computeDistanceToHerd(currentHorse.getPosition());
+                for(int k = 1; k < herds.size(); k++) {
+                    double distanceToHerd = herds.get(k).computeDistanceToHerd(currentHorse.getPosition());
+                    if(distanceToHerd < distanceToNearestHerd) {
+                        distanceToNearestHerd = distanceToHerd;
+                        nearestHerdIndex = k;
+                    }
+                }
+                currentHorse.computeVelocity(herds.get(nearestHerdIndex).getCenter(), rand.nextDouble());
+            }
+
+            for(int j = 0; j < population.size(); j++) {
+                Horse currentHorse = population.get(j);
+                currentHorse.computePosition();
+            }
+
+            for(int j = 0; j < population.size(); j++) {
+                Horse currentHorse = population.get(j);
+                currentHorse.computeMemory();
+            }
+
+            for(int j = 0; j < population.size(); j++) {
+                Horse currentHorse = population.get(j);
+                List<Double> position = population.get(j).getPosition();
+                double fitness = this.of.compute(currentHorse.getPosition());
+                for(int k = 0; k < currentHorse.getMemory().keySet().size(); k++) {
+                    List<Double> memoryRow = currentHorse.getMemory().get(k);
+                    double memFitness = this.of.compute(memoryRow);
+                    if(memFitness < fitness) {
+                        fitness = memFitness;
+                        position = memoryRow;
+                    }
+                }
+                currentHorse.setFitness(fitness);
+                currentHorse.setPosition(position);
+
+                if(fitness < gBest.getFitness()) {
+                    gBest = (Horse) SerializationUtils.clone(currentHorse);
+                }
+            }
+
+            for(int j = 0; j < population.size(); j++) {
+                population.get(j).setRank(0.0);
+            }
+
+            for(int j = 0; j < herds.size(); j++) {
+                herds.get(j).computeRanks();
+            }
+
+            for(int j = 0; j < herds.size(); j++) {
+                herds.get(j).computeHerdCenter();
+            }
+
+            for(int j = 0; j < singleStallions.size(); j++) {
+                Horse currentHorse = singleStallions.get(j);
+                int nearestHerdIndex = 0;
+                double distanceToNearestHerd = herds.get(0).computeDistanceToHerd(currentHorse.getPosition());
+                for(int k = 1; k < herds.size(); k++) {
+                    double distanceToHerd = herds.get(k).computeDistanceToHerd(currentHorse.getPosition());
+                    if(distanceToHerd < distanceToNearestHerd) {
+                        distanceToNearestHerd = distanceToHerd;
+                        nearestHerdIndex = k;
+                    }
+                }
+                Horse nearestHerdStallion = herds.get(nearestHerdIndex).getHorses().get(0);
+                if(currentHorse.getFitness() < nearestHerdStallion.getFitness()) {
+                    Horse currentHorseClone = (Horse) SerializationUtils.clone(currentHorse);
+                    Horse nearestHerdStallionClone = (Horse) SerializationUtils.clone(nearestHerdStallion);
+                    nearestHerdStallion = currentHorseClone;
+                    currentHorse = nearestHerdStallionClone;
+                }
+            }
 
             result.setLogs(result.getLogs() + "  Iteration " + (i + 1) + "\n");
             result.setLogs(result.getLogs() + "  GBest = " + gBest.getFitness() + "\n");
