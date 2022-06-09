@@ -87,6 +87,24 @@ public class App {
         reorganizationFrequencyField.addKeyListener(addKeyAdapterForDigits());
         pane.add(reorganizationFrequencyField);
 
+        JLabel minVLabel = new JLabel("Minimum velocity (vMin):");
+        pane.add(minVLabel);
+
+        final JTextField minVField = new JTextField(10);
+        pane.add(minVField);
+
+        JLabel maxVLabel = new JLabel("Minimum velocity (vMax):");
+        pane.add(maxVLabel);
+
+        final JTextField maxVField = new JTextField(10);
+        pane.add(maxVField);
+
+        JLabel sdLabel = new JLabel("Standard deviation (sd):");
+        pane.add(sdLabel);
+
+        final JTextField sdField = new JTextField(10);
+        pane.add(sdField);
+
         final JLabel ofLabel = new JLabel("Objective function (OF):");
         pane.add(ofLabel);
 
@@ -165,12 +183,36 @@ public class App {
         reorganizationFrequencyField.setBounds(250 + insets.left, 200 + insets.top,
                 size.width, size.height);
 
+        size = minVLabel.getPreferredSize();
+        minVLabel.setBounds(25 + insets.left, 225 + insets.top,
+                size.width, size.height);
+
+        size = minVField.getPreferredSize();
+        minVField.setBounds(250 + insets.left, 225 + insets.top,
+                size.width, size.height);
+
+        size = maxVLabel.getPreferredSize();
+        maxVLabel.setBounds(25 + insets.left, 250 + insets.top,
+                size.width, size.height);
+
+        size = maxVField.getPreferredSize();
+        maxVField.setBounds(250 + insets.left, 250 + insets.top,
+                size.width, size.height);
+
+        size = sdLabel.getPreferredSize();
+        sdLabel.setBounds(25 + insets.left, 275 + insets.top,
+                size.width, size.height);
+
+        size = sdField.getPreferredSize();
+        sdField.setBounds(250 + insets.left, 275 + insets.top,
+                size.width, size.height);
+
         size = ofLabel.getPreferredSize();
-        ofLabel.setBounds(25 + insets.left, 225 + insets.top,
+        ofLabel.setBounds(25 + insets.left, 300 + insets.top,
                 size.width, size.height);
 
         size = ofsComboBox.getPreferredSize();
-        ofsComboBox.setBounds(250 + insets.left, 225 + insets.top,
+        ofsComboBox.setBounds(250 + insets.left, 300 + insets.top,
                 size.width, size.height);
 
         size = scrollPane.getPreferredSize();
@@ -191,6 +233,9 @@ public class App {
                 int HDR = Integer.parseInt(hdrField.getText());
                 int HMP = Integer.parseInt(hmpField.getText());
                 int M = Integer.parseInt(reorganizationFrequencyField.getText());
+                double vMin = Double.parseDouble(minVField.getText());
+                double vMax = Double.parseDouble(maxVField.getText());
+                double sd = Double.parseDouble(sdField.getText());
                 String OF = (String) ofsComboBox.getSelectedItem();
 
                 textArea.setText(null);
@@ -207,13 +252,16 @@ public class App {
                 textArea.append("  Horse distribution rate (HDR) = " + HDR + "\n");
                 textArea.append("  Horse memory pool (HMP) = " + HMP + "\n");
                 textArea.append("  Reorganization frequency (M) = " + M + "\n");
+                textArea.append("  Minimum velocity (vMin) = " + vMin + "\n");
+                textArea.append("  Maximum velocity (vMax) = " + vMax + "\n");
+                textArea.append("  Standard deviation (sd) = " + sd + "\n");
                 textArea.append("  Objective function (OF) = " + OF + "\n");
 
                 textArea.append("  ------------------------------------------------------------\n");
                 textArea.append("  SIMULATION LOGS\n");
                 textArea.append("  ------------------------------------------------------------\n");
 
-                HOA hoa = new HOA(N, I, D, DSP, SSP, HDR, HMP, M, OFCreator.generateOF(OF));
+                HOA hoa = new HOA(N, I, D, DSP, SSP, HDR, HMP, M, vMin, vMax, sd, OFCreator.generateOF(OF));
                 Result result = hoa.run();
                 textArea.append(result.getLogs());
                 textArea.append("  ------------------------------------------------------------\n");
