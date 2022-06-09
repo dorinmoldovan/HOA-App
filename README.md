@@ -1,9 +1,15 @@
 # HOA-App
 
+A Java implementation of the HOA.
+
 ## Using HOA-App
 
 1. Clone the current repository locally.
 2. Run the App.java class.
+
+## Objective Functions
+
+1. OF1: $\sum_{i=1}^{N}x_i^2$
 
 ## HOA-App Use Case
 
