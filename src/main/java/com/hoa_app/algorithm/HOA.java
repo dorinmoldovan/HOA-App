@@ -26,7 +26,7 @@ public class HOA {
     private Double sd;
     private Random rand;
 
-    public HOA(int n, int i, int d, int DSP, int SSP, int HDR, int HMP, int m, OF of) {
+    public HOA(int n, int i, int d, int DSP, int SSP, int HDR, int HMP, int m, double vMin, double vMax, double sd, OF of) {
         this.N = n;
         this.I = i;
         this.D = d;
@@ -36,9 +36,9 @@ public class HOA {
         this.HMP = HMP;
         this.M = m;
         this.of = of;
-        this.vMin = -0.01;
-        this.vMax = 0.01;
-        this.sd = 1.0;
+        this.vMin = vMin;
+        this.vMax = vMax;
+        this.sd = sd;
         this.rand = new Random(System.currentTimeMillis());
     }
 
