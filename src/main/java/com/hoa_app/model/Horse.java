@@ -64,12 +64,12 @@ public class Horse implements Serializable {
         }
     }
 
-    public void computeMemory() {
+    public void computeMemory(double sd) {
         this.memory = new HashMap<>();
         for(int i = 0; i < HMP; i++) {
             List<Double> memoryValue = new ArrayList<Double>();
             for(int j = 0; j < D; j++) {
-                double memVal = this.position.get(j) * rand.nextGaussian();
+                double memVal = this.position.get(j) * rand.nextGaussian() * sd;
                 if(memVal < pMin) {
                     memVal = pMin;
                 }

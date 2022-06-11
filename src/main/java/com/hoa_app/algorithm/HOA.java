@@ -163,7 +163,7 @@ public class HOA {
 
             for(int j = 0; j < population.size(); j++) {
                 Horse currentHorse = population.get(j);
-                currentHorse.computeMemory();
+                currentHorse.computeMemory(sd);
             }
 
             for(int j = 0; j < population.size(); j++) {
