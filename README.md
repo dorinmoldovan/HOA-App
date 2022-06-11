@@ -1,6 +1,6 @@
 # HOA-App
 
-A Java implementation of the HOA.
+A Java implementation of the Horse Optimization Algorithm (HOA).
 
 ## Using HOA-App
 
