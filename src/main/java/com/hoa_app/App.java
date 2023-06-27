@@ -95,7 +95,7 @@ public class App {
         final JTextField minVField = new JTextField(10);
         pane.add(minVField);
 
-        JLabel maxVLabel = new JLabel("Minimum velocity (vMax):");
+        JLabel maxVLabel = new JLabel("Maximum velocity (vMax):");
         pane.add(maxVLabel);
 
         final JTextField maxVField = new JTextField(10);
